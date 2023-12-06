@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { readDeck, createCard, updateCard } from '../utils/api/index';
+import { readDeck, createCard, updateCard } from './utils/api/index';
 
 function CardForm({ isEdit }) {
   const { deckId, cardId } = useParams();

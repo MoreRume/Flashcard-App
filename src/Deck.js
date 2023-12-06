@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { readDeck, deleteDeck, deleteCard } from '../utils/api/index';
+import { readDeck, deleteDeck, deleteCard } from './utils/api/index';
 
 function Deck() {
   const { deckId } = useParams();
@@ -50,9 +50,9 @@ function Deck() {
   };
 
   if (!deck) {
-    return <div>Loading...</div>; 
-  return (
-    <div>
+    return <div>Loading...</div>; }
+  else {return (
+    <Fragment>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item"><Link to="/">Home</Link></li>
@@ -62,15 +62,25 @@ function Deck() {
       <div>
         <h3>{deck.name}</h3>
         <p>{deck.description}</p>
-        <button className="btn btn-secondary mr-2" onClick={() => history.push(`/decks/${deckId}/edit`)}>
+        <Link to={`/decks/${deckId}/edit`}>
+        <button className="btn btn-secondary mr-2">
+          <i className="bi bi-plus mr-1"></i>
           Edit
         </button>
-        <button className="btn btn-primary mr-2" onClick={() => history.push(`/decks/${deckId}/study`)}>
+          </Link>
+        <Link to={`/decks/${deckId}/study`}>
+        <button className="btn btn-primary mr-2">
+           <i className="bi bi-plus mr-1"></i>
           Study
         </button>
-        <button className="btn btn-primary mr-2" onClick={() => history.push(`/decks/${deckId}/cards/new`)}>
-          Add Cards
-        </button>
+        </Link>
+        <Link to={`/decks/${deckId}/cards/new`}>
+        <button className="btn btn-primary">
+            <i className="bi bi-plus mr-1"></i>
+           Add Card
+             </button>
+                </Link>
+      
         <button className="btn btn-danger" onClick={handleDeleteDeck}>
           Delete
         </button>
@@ -83,9 +93,12 @@ function Deck() {
             <div className="card-body">
               <h5 className="card-title">{card.front}</h5>
               <p className="card-text">{card.back}</p>
-              <button className="btn btn-secondary mr-2" onClick={() => history.push(`/decks/${deckId}/cards/${card.id}/edit`)}>
+              <Link to={`/decks/${deckId}/cards/${card.id}/edit`}>
+              <button className="btn btn-secondary mr-2">
+                <i className="bi bi-plus mr-1"></i>
                 Edit
               </button>
+              </Link>
               <button className="btn btn-danger" onClick={() => handleDeleteCard(card.id)}>
                 Delete
               </button>
@@ -93,9 +106,9 @@ function Deck() {
           </div>
         ))}
       </div>
-    </div>
+    </Fragment>
   );
 }
+  
 }
-
 export default Deck
