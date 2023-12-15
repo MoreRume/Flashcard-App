@@ -46,7 +46,28 @@ function Study() {
   };
 
   if (!deck || deck.cards.length < 3) {
-    return <div>Not enough cards...</div>;
+    return (
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+            <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck ? deck.name : 'Deck'}</Link></li>
+            <li className="breadcrumb-item active">Study</li>
+          </ol>
+        </nav>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">{deck ? `Study: ${deck.name}` : 'Study'}</h5>
+            <div className="card-text">
+              <p>{!deck || deck.cards.length < 3 ? `Not enough cards in ${deck ? deck.name : 'the deck'}` : null}</p>
+              <Link to={`/decks/${deckId}`} className="btn btn-primary">
+                Back to Deck
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const currentCard = deck.cards[cardIndex];
