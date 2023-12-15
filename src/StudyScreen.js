@@ -8,6 +8,7 @@ function Study() {
   const [deck, setDeck] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [isFront, setIsFront] = useState(true);
+  const [showNextButton, setShowNextButton] = useState(false); // New state to handle Next button visibility
 
   useEffect(() => {
     const loadDeck = async () => {
@@ -25,6 +26,7 @@ function Study() {
 
   const handleFlip = () => {
     setIsFront(!isFront);
+    setShowNextButton(true); // Show the Next button after flipping the card
   };
 
   const handleNext = () => {
@@ -39,11 +41,12 @@ function Study() {
     } else {
       setCardIndex(cardIndex + 1);
       setIsFront(true);
+      setShowNextButton(false); // Hide the Next button when moving to the next card
     }
   };
 
   if (!deck || deck.cards.length < 3) {
-    return <div>Not enough cards...</div>; 
+    return <div>Not enough cards...</div>;
   }
 
   const currentCard = deck.cards[cardIndex];
@@ -67,9 +70,11 @@ function Study() {
           <button className="btn btn-secondary mr-2" onClick={handleFlip}>
             Flip
           </button>
-          <button className="btn btn-primary" onClick={handleNext}>
-            Next
-          </button>
+          {showNextButton && (
+            <button className="btn btn-primary" onClick={handleNext}>
+              Next
+            </button>
+          )}
         </div>
       </div>
     </div>

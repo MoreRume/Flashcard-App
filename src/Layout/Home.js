@@ -9,7 +9,10 @@ function Home() {
     const loadDecks = async () => {
       try {
         const loadedDecks = await listDecks();
-        setDecks(loadedDecks);
+        setDecks(loadedDecks.map(deck => ({
+          ...deck,
+          cardCount: deck.cards.length // Assuming 'cards' is an array in each deck object
+        })));
       } catch (error) {
         // Handle error (e.g., display an error message)
         console.error('Error loading decks:', error);
@@ -43,6 +46,7 @@ function Home() {
             <div className="card-body">
               <h5 className="card-title">{deck.name}</h5>
               <p className="card-text">{deck.description}</p>
+              <p>Number of Cards: {deck.cardCount}</p> {/* Displaying card count */}
               <Link to={`/decks/${deck.id}`} className="btn btn-secondary mr-2">
                 View
               </Link>
